@@ -1,73 +1,142 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
+int main(void) {
     char s1[100], s2[100], temp[100];
-    int ch, i, start, len, flag;
+    int ch, choice, i, start, len, flag;
+    char *str;
 
     printf("Enter first string: ");
-    scanf("%s", s1);
+    scanf("%99s", s1);
 
     printf("Enter second string: ");
-    scanf("%s", s2);
+    scanf("%99s", s2);
 
-    while(1) {
-        printf("\n\n--- MENU ---");
-        printf("\n1. Substring\n2. Palindrome\n3. Compare\n4. Copy\n5. Reverse\n6. Exit\n");
+    while (1) {
+        printf("\n\n--- MENU ---\n");
+        printf("1. Substring\n");
+        printf("2. Palindrome\n");
+        printf("3. Compare\n");
+        printf("4. Copy\n");
+        printf("5. Reverse\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &ch);
 
         if (ch == 6) {
             printf("Exiting program.\n");
-            break;
+            return 0;
         }
 
-        switch(ch) {
+        switch (ch) {
             case 1:
+                printf("Enter string number (1 or 2): ");
+                scanf("%d", &choice);
+
+                if (choice == 1)
+                    str = s1;
+                else if (choice == 2)
+                    str = s2;
+                else {
+                    printf("Invalid string choice.\n");
+                    break;
+                }
+
                 printf("Enter start index and length: ");
                 scanf("%d%d", &start, &len);
+
+                if (start < 0 || len < 0 || start >= (int)strlen(str)) {
+                    printf("Invalid start index or length.\n");
+                    break;
+                }
+
                 printf("Substring: ");
-                for(i = start; i < start + len && s1[i] != '\0'; i++)
-                    printf("%c", s1[i]);
+
+                for (i = start; i < start + len && str[i] != '\0'; i++)
+                    printf("%c", str[i]);
+
+                printf("\n");
                 break;
 
             case 2:
-                flag = 1; // Reset flag inside the loop so it works correctly on repeated runs
-                len = strlen(s1);
-                for(i = 0; i < len / 2; i++) {
-                    if(s1[i] != s1[len - 1 - i]) {
+                printf("Enter string number (1 or 2): ");
+                scanf("%d", &choice);
+
+                if (choice == 1)
+                    str = s1;
+                else if (choice == 2)
+                    str = s2;
+                else {
+                    printf("Invalid string choice.\n");
+                    break;
+                }
+
+                len = strlen(str);
+                flag = 1;
+
+                for (i = 0; i < len / 2; i++) {
+                    if (str[i] != str[len - 1 - i]) {
                         flag = 0;
                         break;
                     }
                 }
-                if(flag)
-                    printf("Palindrome");
+
+                if (flag)
+                    printf("Palindrome\n");
                 else
-                    printf("Not Palindrome");
+                    printf("Not Palindrome\n");
+
                 break;
 
             case 3:
-                if(strcmp(s1, s2) == 0)
-                    printf("Strings are Equal");
+                if (strcmp(s1, s2) == 0)
+                    printf("Strings are Equal\n");
                 else
-                    printf("Strings are Not Equal");
+                    printf("Strings are Not Equal\n");
+
                 break;
 
             case 4:
-                strcpy(temp, s1);
-                printf("Copied String: %s", temp);
+                printf("Enter string number (1 or 2): ");
+                scanf("%d", &choice);
+
+                if (choice == 1)
+                    strcpy(temp, s1);
+                else if (choice == 2)
+                    strcpy(temp, s2);
+                else {
+                    printf("Invalid string choice.\n");
+                    break;
+                }
+
+                printf("Copied String: %s\n", temp);
                 break;
 
             case 5:
-                len = strlen(s1);
+                printf("Enter string number (1 or 2): ");
+                scanf("%d", &choice);
+
+                if (choice == 1)
+                    str = s1;
+                else if (choice == 2)
+                    str = s2;
+                else {
+                    printf("Invalid string choice.\n");
+                    break;
+                }
+
+                len = strlen(str);
+
                 printf("Reversed String: ");
-                for(i = len - 1; i >= 0; i--)
-                    printf("%c", s1[i]);
+
+                for (i = len - 1; i >= 0; i--)
+                    printf("%c", str[i]);
+
+                printf("\n");
                 break;
 
             default:
-                printf("Invalid choice! Please select a valid option.");
-                break;
+                printf("Invalid choice! Please select a valid option.\n");
         }
     }
 
